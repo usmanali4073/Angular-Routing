@@ -6,14 +6,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ProductData } from './products/product-data';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { WelcomeComponent } from './home/welcome.component';
+import { PageNotFoundComponent } from './page-not-found.component';
 
 /* Feature Modules */
 import { ProductModule } from './products/product.module';
 import { UserModule } from './user/user.module';
 import { MessageModule } from './messages/message.module';
-import { AppRoutingModule } from './app-routing.module';
-
 
 @NgModule({
   imports: [
@@ -27,6 +28,8 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   declarations: [
     AppComponent,
+    WelcomeComponent,
+    PageNotFoundComponent
   ],
   bootstrap: [AppComponent]
 })

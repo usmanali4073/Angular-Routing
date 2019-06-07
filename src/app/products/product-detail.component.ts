@@ -1,43 +1,24 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { Product } from "./product";
-import { ProductService } from "./product.service";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Product, ProductResolved } from './product';
 
 @Component({
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
-
   pageTitle = 'Product Detail';
   product: Product;
   errorMessage: string;
 
-  constructor( private productService: ProductService, private router: ActivatedRoute ) {
-    // this.product = this.router.snapshot.data['resolvedProduced']
-
-    this.router.snapshot.data.subscribe(data => {
-      const product: Product = data['resolvedProduced'];
-      console.log(product);
-      this.onProductRetrieved(product);
-    })
-  }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    // const id = this.router.snapshot.paramMap.get('id');
-    // if (id != null) {
-    //   this.getProduct(Number(id));
-    // }
-  }
-
-  getProduct(id: number) {
-    this.productService
-      .getProduct(id)
-      .subscribe(
-        product => this.onProductRetrieved(product),
-        error => (this.errorMessage = <any>error)
-      );
+    const resolvedData: ProductResolved =
+      this.route.snapshot.data['resolvedData'];
+    this.errorMessage = resolvedData.error;
+    this.onProductRetrieved(resolvedData.product);
   }
 
   onProductRetrieved(product: Product): void {
@@ -46,7 +27,7 @@ export class ProductDetailComponent implements OnInit {
     if (this.product) {
       this.pageTitle = `Product Detail: ${this.product.productName}`;
     } else {
-      this.pageTitle = "No product found";
+      this.pageTitle = 'No product found';
     }
   }
 }

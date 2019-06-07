@@ -1,17 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthService } from './user/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'pm-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  ngOnInit(): void {
-    console.log(this.route.snapshot.data['pageTitle']);
-  }
+export class AppComponent {
   pageTitle = 'Acme Product Management';
 
   get isLoggedIn(): boolean {
@@ -25,13 +22,11 @@ export class AppComponent implements OnInit {
     return '';
   }
 
-  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {
-
-   }
+  constructor(private authService: AuthService,
+              private router: Router) { }
 
   logOut(): void {
     this.authService.logout();
-    this.router.navigateByUrl('/welcome')
-    console.log('Log out');
+    this.router.navigateByUrl('/welcome');
   }
 }
